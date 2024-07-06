@@ -49,4 +49,18 @@ describe('Incremendator Component', () => {
     buttons[1].triggerEventHandler('click', null)
     expect(component.progreso).toBe(50)
   });
+
+  it('debe de mostrar en el titulo un decremento en 5 del progreso', () => {
+    const buttons = fixture.debugElement.queryAll(By.css('.btn-primary'));
+
+    buttons[0].triggerEventHandler('click', null)
+
+    fixture.detectChanges();
+
+    const elem: HTMLElement = fixture.debugElement.query(
+      By.css('h3')
+    ).nativeElement;
+
+    expect(elem.innerHTML).toContain('45')
+  });
 });
