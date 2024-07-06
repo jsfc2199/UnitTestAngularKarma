@@ -2,6 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { RouterLinkWithHref, RouterModule, RouterOutlet } from '@angular/router';
 import { By } from '@angular/platform-browser';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
@@ -12,8 +13,9 @@ describe('AppComponent', () => {
           []
         )
       ],
+      schemas:[NO_ERRORS_SCHEMA], //IGNORA CUALQUIER DIRECTIVA QUE NO CONOZCA
       declarations: [
-        AppComponent
+        AppComponent,
       ],
     }).compileComponents();
   });
@@ -37,17 +39,5 @@ describe('AppComponent', () => {
     expect(debugElement).not.toBeNull()
   })
 
-  it('debe de tener un routerLink a la pagina de medicos', () =>{
-    const fixture = TestBed.createComponent(AppComponent);
-    const debugElements = fixture.debugElement.queryAll(By.directive(RouterLinkWithHref))
 
-    let existe = false;
-    for (const element of debugElements) {
-      if(element.attributes['routerLink'] === '/medicos'){
-        existe = true;
-        break;
-      }
-    }
-    expect(existe).toBeTruthy()
-  })
 });

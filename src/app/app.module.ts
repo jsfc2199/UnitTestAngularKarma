@@ -9,6 +9,7 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { FormsModule} from '@angular/forms';
 import { IncrementadorComponent } from './intermedio-integracion/incrementador/incrementador.component';
 import { HospitalComponent } from './hospital/hospital.component';
+import { NavbarComponent } from './avanzado/navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { HospitalComponent } from './hospital/hospital.component';
     MedicosComponent,
     MedicoComponent,
     IncrementadorComponent,
-    HospitalComponent
+    HospitalComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
