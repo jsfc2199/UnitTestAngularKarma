@@ -6,16 +6,20 @@ import { AppComponent } from './app.component';
 import { MedicosComponent } from './intermedio/espias/medicos.component';
 import { MedicoComponent } from './intermedio-integracion/medico/medico.component';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { FormsModule} from '@angular/forms';
+import { IncrementadorComponent } from './intermedio-integracion/incrementador/incrementador.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MedicosComponent,
-    MedicoComponent
+    MedicoComponent,
+    IncrementadorComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [provideHttpClient(withInterceptorsFromDi())],
   bootstrap: [AppComponent]
