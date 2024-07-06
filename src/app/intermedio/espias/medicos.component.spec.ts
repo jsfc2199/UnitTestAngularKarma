@@ -1,6 +1,6 @@
 import { MedicosComponent } from './medicos.component';
 import { MedicosService } from './medicos.service';
-import { EMPTY, from } from 'rxjs';
+import { EMPTY, from, of } from 'rxjs';
 
 describe('MedicosComponent', () => {
   let componente: MedicosComponent;
@@ -35,5 +35,17 @@ describe('MedicosComponent', () => {
     componente.agregarMedico();
 
     expect(espia).toHaveBeenCalled();
+  });
+
+  it('debe agregar al medico', () => {
+    const medicoResponse = 'Carlo'
+
+    //usamos espías para hacer peticiones falsas
+    spyOn(servicio, 'agregarMedico').and.returnValue(of(medicoResponse))
+
+    //el ngOnInit lo debemos llamar de manera manual a menos de que estuviera en e constructor del componente
+    componente.agregarMedico();
+
+    expect(componente.medicos.indexOf(medicoResponse)).toBeGreaterThanOrEqual(0)
   });
 });
