@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MedicoComponent } from './medico.component';
+import { MedicoService } from './medico.service';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('MedicoComponent', () => {
   let component: MedicoComponent;
@@ -8,7 +11,13 @@ describe('MedicoComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [MedicoComponent]
+      declarations: [MedicoComponent],
+      providers: [
+        //integramos nuestro servicio de medicos y http para que los test funcionen nuevamente
+        MedicoService,
+        provideHttpClient(),
+        provideHttpClientTesting()
+      ]
     })
     .compileComponents();
 
