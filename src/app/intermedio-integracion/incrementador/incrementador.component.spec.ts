@@ -2,6 +2,7 @@ import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { IncrementadorComponent } from './incrementador.component';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
+import { ElementRef } from '@angular/core';
 
 describe('Incremendator Component', () => {
   let component: IncrementadorComponent;
@@ -26,5 +27,18 @@ describe('Incremendator Component', () => {
     //esperamos a que se detecten los cambios primero
     fixture.detectChanges();
     expect(elem.innerHTML).toContain('progreso');
+  });
+
+  it('debe de mostrar en el input el valor del progreso', () => {
+    component.cambiarValor(5);
+    fixture.detectChanges();
+
+    //como a veces la detección de cambios es "lenta" podemos esperar a que esté estable
+    //ademas se evaluaba primero el expect antes de que la detecc9ón de cambios se ejecutara
+    fixture.whenStable().then(() => {
+      const compiled: HTMLElement = fixture.nativeElement;
+      const input: HTMLInputElement = compiled.querySelector('input');
+      expect(input.value).toBe('55');
+    });
   });
 });
