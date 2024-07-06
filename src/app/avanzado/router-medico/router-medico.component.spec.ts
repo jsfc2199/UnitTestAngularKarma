@@ -2,14 +2,14 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RouterMedicoComponent } from './router-medico.component';
 import { ActivatedRoute, Router } from '@angular/router';
-import { EMPTY, Observable } from 'rxjs';
+import { EMPTY, Falsy, from, Observable, Subject } from 'rxjs';
 
 class FakeRouter {
   navigate(params){}
 }
 
 class FakeActivatedRoute{
-  params: Observable<any> = EMPTY
+  params: Observable<any> = from([{id:'nuevo'}])
 }
 
 describe('RouterMedicoComponent', () => {
@@ -21,7 +21,9 @@ describe('RouterMedicoComponent', () => {
       declarations: [RouterMedicoComponent],
       providers:[
         {provide: Router, useClass: FakeRouter},
-        {provide: ActivatedRoute, useClass: FakeActivatedRoute},
+        {provide: ActivatedRoute, useClass: FakeActivatedRoute, useValue:{
+          params: from([{id: 'nuevo'}])
+        }},
 
       ]
     })
@@ -39,6 +41,12 @@ describe('RouterMedicoComponent', () => {
     component.guardarMedico()
 
     expect(spy).toHaveBeenCalledWith(['medico', '123'])
+  })
+
+
+  it('Debe de colocar le id = nuevo',()=>{
+    TestBed.inject(ActivatedRoute)
+        expect(component.id).toBe('nuevo')
   })
 
 });
