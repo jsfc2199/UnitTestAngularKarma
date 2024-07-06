@@ -1,12 +1,16 @@
 import { TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
+import { RouterLinkWithHref, RouterModule, RouterOutlet } from '@angular/router';
+import { By } from '@angular/platform-browser';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule
+        // RouterTestingModule,
+        RouterModule.forRoot(
+          []
+        )
       ],
       declarations: [
         AppComponent
@@ -26,10 +30,24 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('Pruebas');
   });
 
-  it('should render title', () => {
+  it('debe de tener un router outlet', () => {
     const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, Pruebas');
-  });
+    const debugElement = fixture.debugElement.query(By.directive(RouterOutlet))
+
+    expect(debugElement).not.toBeNull()
+  })
+
+  it('debe de tener un routerLink a la pagina de medicos', () =>{
+    const fixture = TestBed.createComponent(AppComponent);
+    const debugElements = fixture.debugElement.queryAll(By.directive(RouterLinkWithHref))
+
+    let existe = false;
+    for (const element of debugElements) {
+      if(element.attributes['routerLink'] === '/medicos'){
+        existe = true;
+        break;
+      }
+    }
+    expect(existe).toBeTruthy()
+  })
 });
