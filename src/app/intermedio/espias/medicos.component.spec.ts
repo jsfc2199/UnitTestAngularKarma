@@ -27,9 +27,10 @@ describe('MedicosComponent', () => {
   });
 
   it('debe de llamar al servidor para agregar un médico', () => {
-
     //usamos espías para hacer peticiones falsas
-    const espia = spyOn(servicio, 'agregarMedico').and.callFake((medico) => EMPTY);
+    const espia = spyOn(servicio, 'agregarMedico').and.callFake(
+      (medico) => EMPTY
+    );
 
     //el ngOnInit lo debemos llamar de manera manual a menos de que estuviera en e constructor del componente
     componente.agregarMedico();
@@ -38,26 +39,51 @@ describe('MedicosComponent', () => {
   });
 
   it('debe agregar al medico', () => {
-    const medicoResponse = 'Carlo'
+    const medicoResponse = 'Carlo';
 
     //usamos espías para hacer peticiones falsas
-    spyOn(servicio, 'agregarMedico').and.returnValue(of(medicoResponse))
+    spyOn(servicio, 'agregarMedico').and.returnValue(of(medicoResponse));
 
     //el ngOnInit lo debemos llamar de manera manual a menos de que estuviera en e constructor del componente
     componente.agregarMedico();
 
-    expect(componente.medicos.indexOf(medicoResponse)).toBeGreaterThanOrEqual(0)
+    expect(componente.medicos.indexOf(medicoResponse)).toBeGreaterThanOrEqual(
+      0
+    );
   });
 
   it('si falla la adición el mensajeError = error del servicio', () => {
-    const error = 'Error del medico'
+    const error = 'Error del medico';
 
     //usamos espías para hacer peticiones falsas
-    spyOn(servicio, 'agregarMedico').and.returnValue(throwError(() => error))
+    spyOn(servicio, 'agregarMedico').and.returnValue(throwError(() => error));
 
     //el ngOnInit lo debemos llamar de manera manual a menos de que estuviera en e constructor del componente
     componente.agregarMedico();
 
     expect(componente.mensajeError).toBe(error);
+  });
+
+  it('debe llamar al servidor para borrar un medico', () => {
+    //simulamos la confirmación del usuario ya que tenemos una alerta de confirm
+    spyOn(window, 'confirm').and.returnValue(true);
+
+    //usamos espías para hacer peticiones falsas
+    const espia = spyOn(servicio, 'borrarMedico').and.returnValue(EMPTY);
+
+    //el ngOnInit lo debemos llamar de manera manual a menos de que estuviera en e constructor del componente
+    componente.borrarMedico('1');
+
+    expect(espia).toHaveBeenCalledWith('1');
+  });
+
+  it('No debe llamar al servidor para borrar medico', () => {
+    spyOn(window, 'confirm').and.returnValue(false);
+
+    const spy = spyOn(servicio, 'borrarMedico').and.returnValue(EMPTY);
+
+    componente.borrarMedico('1');
+
+    expect(spy).not.toHaveBeenCalledWith('1');
   });
 });
