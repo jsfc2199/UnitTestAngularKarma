@@ -8,13 +8,15 @@ import { MedicoComponent } from './intermedio-integracion/medico/medico.componen
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { FormsModule} from '@angular/forms';
 import { IncrementadorComponent } from './intermedio-integracion/incrementador/incrementador.component';
+import { HospitalComponent } from './hospital/hospital.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MedicosComponent,
     MedicoComponent,
-    IncrementadorComponent
+    IncrementadorComponent,
+    HospitalComponent
   ],
   imports: [
     BrowserModule,
