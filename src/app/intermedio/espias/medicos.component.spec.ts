@@ -1,6 +1,6 @@
 import { MedicosComponent } from './medicos.component';
 import { MedicosService } from './medicos.service';
-import { EMPTY, from, of } from 'rxjs';
+import { EMPTY, from, of, throwError } from 'rxjs';
 
 describe('MedicosComponent', () => {
   let componente: MedicosComponent;
@@ -47,5 +47,17 @@ describe('MedicosComponent', () => {
     componente.agregarMedico();
 
     expect(componente.medicos.indexOf(medicoResponse)).toBeGreaterThanOrEqual(0)
+  });
+
+  it('si falla la adición el mensajeError = error del servicio', () => {
+    const error = 'Error del medico'
+
+    //usamos espías para hacer peticiones falsas
+    spyOn(servicio, 'agregarMedico').and.returnValue(throwError(() => error))
+
+    //el ngOnInit lo debemos llamar de manera manual a menos de que estuviera en e constructor del componente
+    componente.agregarMedico();
+
+    expect(componente.mensajeError).toBe(error);
   });
 });
